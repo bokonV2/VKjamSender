@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="static/css/master.css">
+    <link rel="stylesheet" href="static/css/popup.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="static/js/main.js"></script>
+  </head>
+  <body>
+    <div class="tableGr">
+      <table>
+        <th>Имя групы</th>
+        <th>ID группы</th>
+        <th>URL группы</th>
+        <th>Дата подписки</th>
+        <th>Сумма</th>
+        <th>Отправления</th>
+        <th>Управление</th>
+        {% for ob in obj %}
+        <tr>
+          <td>{{ ob.groupName }}</td>
+          <td>{{ ob.groupId }}</td>
+          <td>{{ ob.groupUrl }}</td>
+          <td>{{ ob.payDay }}</td>
+          <td>{{ ob.money }}</td>
+          <td>{{ ob.send }}</td>
+          <td>
+            <button onclick="sendId('{{ ob.groupName }}')">Send this</button>
+            <button onclick="removeGroup('{{ ob.groupName }}')">Dell this</button>
+            <button onclick="openWin('{{ ob.groupName }}', {{ ob.money }}, {{ ob.payDay }})">Add this</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <button onclick="send()">Start All</button>
+    <button class="popup-open2">Добавить группу</button>
+
+    <!-- окно добавления группы в БД -->
+    <div class="popup-fade2">
+      <div class="popup2">
+        <a class="popup-close2" href="#">Закрыть</a>
+        <form method="post" id="ajax_form">
+          <input type="text" name="groupName" value="">
+          <br>
+          <input type="number" name="groupId" value="">
+          <br>
+          <input type="text" name="groupUrl" value="">
+          <br>
+          <input type="date" name="payDay" value="">
+          <br>
+          <input type="number" name="money" value="">
+          <br>
+          <input type="button" id="btn" value="Добавить" />
+        </form>
+      </div>
+    </div>
+    <!-- окно редактирования даты и цены -->
+    <div class="popup-fade">
+      <div class="popup">
+        <a class="popup-close" href="#">Закрыть</a>
+        <form method="post" id="ajax_form2">
+          <input readonly type="text" name="gName" id="gName">
+          <br>
+          <input type="date" name="payDay" id="payDay">
+          <br>
+          <input type="number" name="money" id="money">
+          <br>
+          <input type="button" id="btn2" value="Изменить" />
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
