@@ -12,8 +12,9 @@
     <div class="tableGr">
       <table>
         <th>Имя групы</th>
-        <th>ID группы</th>
         <th>URL группы</th>
+        <th>Сообщение</th>
+        <th>Стиль</th>
         <th>Дата подписки</th>
         <th>Сумма</th>
         <th>Отправления</th>
@@ -21,23 +22,27 @@
         {% for ob in obj %}
         <tr>
           <td>{{ ob.groupName }}</td>
-          <td>{{ ob.groupId }}</td>
-          <td>{{ ob.groupUrl }}</td>
+          <td><a href="{{ ob.groupUrl }}">{{ ob.groupUrl }}</a></td>
+          <td>🥰Друзья, нажмите кнопку ❤<br>
+            👪Вам не трудно - а именинникам приятно)))<br>
+            🎉Сегодня День рождения отмечают:</td>
+          <td>{{ ob.style }}</td>
           <td>{{ ob.payDay }}</td>
           <td>{{ ob.money }}</td>
           <td>{{ ob.send }}</td>
           <td>
-            <button onclick="sendId('{{ ob.groupName }}')">Send this</button>
-            <button onclick="removeGroup('{{ ob.groupName }}')">Dell this</button>
-            <button onclick="openWin('{{ ob.groupName }}', {{ ob.money }}, {{ ob.payDay }})">Add this</button>
+            <button onclick="sendId('{{ ob.groupName }}')">Отправить пост</button>
+            <button onclick="removeGroup('{{ ob.groupName }}')">Удалить</button>
+            <button onclick="openWin('{{ ob.groupName }}', {{ ob.money }}, {{ ob.payDay }})">Редактировать</button>
           </td>
         </tr>
         {% endfor %}
       </table>
     </div>
 
-    <button onclick="send()">Start All</button>
+    <button onclick="send()">Запуск скрипта</button>
     <button class="popup-open2">Добавить группу</button>
+    <button onclick="reserSt()">Сбросить статус</button>
 
     <!-- окно добавления группы в БД -->
     <div class="popup-fade2">
@@ -45,14 +50,19 @@
         <a class="popup-close2" href="#">Закрыть</a>
         <form method="post" id="ajax_form">
           <input type="text" name="groupName" value="">
-          <br>
-          <input type="number" name="groupId" value="">
+          <label for="">Имя группы</label>
           <br>
           <input type="text" name="groupUrl" value="">
+          <label for="">Ссылка на группу</label>
+          <br>
+          <input type="number" name="style" value="">
+          <label for="">Стиль (0-2)</label>
           <br>
           <input type="date" name="payDay" value="">
+          <label for="">Дата подписки</label>
           <br>
           <input type="number" name="money" value="">
+          <label for="">Сумма</label>
           <br>
           <input type="button" id="btn" value="Добавить" />
         </form>
@@ -64,10 +74,13 @@
         <a class="popup-close" href="#">Закрыть</a>
         <form method="post" id="ajax_form2">
           <input readonly type="text" name="gName" id="gName">
+          <label for="">Имя группы</label>
           <br>
           <input type="date" name="payDay" id="payDay">
+          <label for="">Дата подписки</label>
           <br>
           <input type="number" name="money" id="money">
+          <label for="">Сумма</label>
           <br>
           <input type="button" id="btn2" value="Изменить" />
         </form>

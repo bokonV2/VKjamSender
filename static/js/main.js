@@ -15,7 +15,7 @@ function erroeHand(jqXHR, exception){
   } else {
     alert('Неизвестная ошибка:\n' + jqXHR.responseText);
   }
-}
+};
 
 function sendId(gname) {
   console.log("123321123321");
@@ -33,7 +33,6 @@ function sendId(gname) {
 };
 
 function send(){
-  console.log("qwe123qwe123qwe");
   $.ajax({
     url: '/start',
     method: 'post',
@@ -43,7 +42,19 @@ function send(){
       window.location.reload();
     }
   });
-}
+};
+
+function reserSt(){
+  $.ajax({
+    url: '/reset',
+    method: 'post',
+    error: function (jqXHR, exception){erroeHand(jqXHR, exception)},
+    success: function(){
+      console.log("Successful send");
+      window.location.reload();
+    }
+  });
+};
 
 function removeGroup(gname){
   console.log("qweqweqweqwe");
@@ -96,6 +107,7 @@ function openWin(gName, money, payDay){
 
 $( document ).ready(function() {
   // popup1
+  $("#btn").click(function(){addGroup();});
   $('.popup-open').click(function() {
   $('.popup-fade').fadeIn();
     return false;
