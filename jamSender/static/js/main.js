@@ -18,9 +18,8 @@ function erroeHand(jqXHR, exception){
 };
 
 function sendId(gname) {
-  console.log("123321123321");
   $.ajax({
-      url: '/startId',
+      url: '/jamSender/startId',
       method: 'post',
       dataType: 'json',
       data: {'gName': gname},
@@ -33,8 +32,9 @@ function sendId(gname) {
 };
 
 function send(){
+  document.getElementById("But").disabled = true;
   $.ajax({
-    url: '/start',
+    url: '/jamSender/start',
     method: 'post',
     error: function (jqXHR, exception){erroeHand(jqXHR, exception)},
     success: function(){
@@ -45,8 +45,9 @@ function send(){
 };
 
 function reserSt(){
+  document.getElementById("But2").disabled = true;
   $.ajax({
-    url: '/reset',
+    url: '/jamSender/reset',
     method: 'post',
     error: function (jqXHR, exception){erroeHand(jqXHR, exception)},
     success: function(){
@@ -57,9 +58,8 @@ function reserSt(){
 };
 
 function removeGroup(gname){
-  console.log("qweqweqweqwe");
   $.ajax({
-    url: '/removeGroup',
+    url: '/jamSender/removeGroup',
     method: 'post',
     data: {'gName': gname},
     error: function (jqXHR, exception){erroeHand(jqXHR, exception)},
@@ -71,8 +71,9 @@ function removeGroup(gname){
 };
 
 function addGroup() {
+  document.getElementById("btn").disabled = true;
   $.ajax({
-    url: '/addGroup',
+    url: '/jamSender/addGroup',
     type: 'post',
     dataType: "html",
     data: $("#ajax_form").serialize(),
@@ -85,8 +86,9 @@ function addGroup() {
 };
 
 function addPayDay() {
+  document.getElementById("btn2").disabled = true;
   $.ajax({
-    url: '/addPayDay',
+    url: '/jamSender/addPayDay',
     type: 'post',
     dataType: "html",
     data: $("#ajax_form2").serialize(),

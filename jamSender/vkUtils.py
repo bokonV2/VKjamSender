@@ -1,15 +1,11 @@
-import requests, json
+import requests, json, time
+
 
 V = "5.131"
 DOMAIN = "https://api.vk.com/method/"
 VKURL = "{DOMAIN}{METHOD_NAME}?{PARAMETERS}&access_token={ACCESS_TOKEN}&v={V}"
-ACCESS_TOKEN = "5225fcc35756b681f39a5f8666851ca3639692744092fe64f2623d666e350ea385644d98befff2cd01ba5"
+ACCESS_TOKEN = "2b319b6859e9149c9cf57bc79b8c9a1988ddf2f282f82f9418b2f044688100c68e6c23465038a740b296d"
 
-message = """🥰Друзья, нажмите кнопку ❤
-👪Вам не трудно - а именинникам приятно)))
-
-🎉Сегодня День рождения отмечают:
-{ids}"""
 
 def newAlbum():
     url = VKURL.format(
@@ -30,7 +26,7 @@ def uploadImage():
     response = requests.get(url)
     upload_server = response.json()['response']['upload_url']
 
-    files = {'file1': open('static/img.jpg','rb')}
+    files = {'file1': open('jamSender/static/img.jpg','rb')}
     response = requests.post(upload_server, files=files)
     response = response.json()
     img_hash = response['hash']
@@ -48,7 +44,7 @@ def uploadImage():
     data = (response["response"][0]["id"], response["response"][0]["owner_id"])
     return data
 
-def sendPost(ids, group_id):
+def sendPost(ids, message, group_id):
     id, owner_id = uploadImage()
     url = VKURL.format(
         DOMAIN=DOMAIN,
@@ -57,7 +53,7 @@ def sendPost(ids, group_id):
         ACCESS_TOKEN=ACCESS_TOKEN,
         V=V)
     response = requests.get(url)
-    print(response.json(), group_id)
+    print(f"JamSender sendPost {group_id}, {response.json()}")
 
 def getId(group):
     url = VKURL.format(
@@ -67,6 +63,7 @@ def getId(group):
         ACCESS_TOKEN=ACCESS_TOKEN,
         V=V)
     response = requests.get(url)
+
     return f"-{response.json()['response'][0]['id']}"
 
 if __name__ == '__main__':

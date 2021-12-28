@@ -2,7 +2,7 @@ from peewee import *
 from datetime import date
 from pprint import pprint
 
-db = SqliteDatabase('groups.db')
+db = SqliteDatabase('jamSender/static/groups.db')
 
 
 class BaseModel(Model):
@@ -12,7 +12,7 @@ class BaseModel(Model):
 
 class Groups(BaseModel):
     groupName = CharField(unique=True)
-    groupUrl = CharField()
+    groupUrl = CharField(unique=True)
     style = IntegerField()
     payDay = DateField()
     money = IntegerField()

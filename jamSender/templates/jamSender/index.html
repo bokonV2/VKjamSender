@@ -23,9 +23,7 @@
         <tr>
           <td>{{ ob.groupName }}</td>
           <td><a href="{{ ob.groupUrl }}">{{ ob.groupUrl }}</a></td>
-          <td>🥰Друзья, нажмите кнопку ❤<br>
-            👪Вам не трудно - а именинникам приятно)))<br>
-            🎉Сегодня День рождения отмечают:</td>
+          <td style="white-space: pre-line">{{ ob.message }}</td>
           <td>{{ ob.style }}</td>
           <td>{{ ob.payDay }}</td>
           <td>{{ ob.money }}</td>
@@ -40,9 +38,9 @@
       </table>
     </div>
 
-    <button onclick="send()">Запуск скрипта</button>
+    <button id="But" onclick="send()">Запуск скрипта</button>
     <button class="popup-open2">Добавить группу</button>
-    <button onclick="reserSt()">Сбросить статус</button>
+    <button id="But2" onclick="reserSt()">Сбросить статус</button>
 
     <!-- окно добавления группы в БД -->
     <div class="popup-fade2">
@@ -55,8 +53,16 @@
           <input type="text" name="groupUrl" value="">
           <label for="">Ссылка на группу</label>
           <br>
-          <input type="number" name="style" value="">
+          <input type="number" name="style" value="" min="0" max="2">
           <label for="">Стиль (0-2)</label>
+          <br>
+          <textarea name="message" rows="8" cols="80">
+🥰Друзья, нажмите кнопку ❤
+👪Вам не трудно - а именинникам приятно)))
+🎉Сегодня День рождения отмечают:
+{ids}</textarea>
+          <label for="">Сообщение</label>
+          <br>
           <br>
           <input type="date" name="payDay" value="">
           <label for="">Дата подписки</label>
@@ -86,6 +92,5 @@
         </form>
       </div>
     </div>
-
   </body>
 </html>

@@ -22,3 +22,14 @@ tr, th, td {
   border-collapse: collapse;
   border: 2px solid black;
 }
+textarea {
+  width: 100%;
+}
+input {
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+#btn {
+  width: 100%;
+}
