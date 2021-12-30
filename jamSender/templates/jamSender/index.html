@@ -3,74 +3,172 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="static/css/master.css">
-    <link rel="stylesheet" href="static/css/popup.css">
+    <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/master.css') }}">
+    <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/spin.css') }}">
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="static/js/main.js"></script>
+    <script type="text/javascript" src="{{ url_for('jamSender.static',filename='js/main.js') }}"></script>
   </head>
   <body>
+    <div id="spin">
+      <div class="load"></div>
+      <div class="loadBg"></div>
+    </div>
+
+    <div class="searchForm">
+
+      <form class="search" action="/jamSender/search" method="post">
+        <input type="text" name="group_url" value="" placeholder="  Ссылка на группу">
+        <button type="submit" name="button" onclick="spins()">Поиск</button>
+      </form>
+
+    </div>
+    <div class="compControl">
+      <div class="skrControl">
+        <a id="But" onclick="send()">Запуск скрипта</a>
+        <a class="popup-open2">Добавить группу</a>
+        <a id="But2" onclick="reserSt()">Сбросить статус</a>
+      </div>
+      <div class="BDControl">
+        <label>Сортировка:</label>
+        <a onclick="spins()" href="/jamSender">Все</a>
+        <a onclick="spins()" href="/jamSender/sort/0">Оплаченные</a>
+        <a onclick="spins()" href="/jamSender/sort/1">Не оплаченные</a>
+      </div>
+    </div>
     <div class="tableGr">
+      <div id="controls" class="controls">
+        <input type="checkbox" data-column-class="coll-1" checked>
+        <label for="">Группа</label>
+        <input type="checkbox" data-column-class="coll-2" checked>
+        <label for="">Ссылка на чат</label>
+        <input type="checkbox" data-column-class="coll-3" checked>
+        <label for="">Дата добавления</label>
+        <input type="checkbox" data-column-class="coll-4" checked>
+        <label for="">Дата оплаты</label>
+        <input type="checkbox" data-column-class="coll-5" checked>
+        <label for="">Сумма</label>
+        <input type="checkbox" data-column-class="coll-6" checked>
+        <label for="">Тип отправления</label>
+        <input type="checkbox" data-column-class="coll-7" checked>
+        <label for="">Период отправления</label>
+        <input type="checkbox" data-column-class="coll-8">
+        <label for="">Текст поздравления</label>
+        <input type="checkbox" data-column-class="coll-9" checked>
+        <label for="">Стиль фона</label>
+        <input type="checkbox" data-column-class="coll-10" checked>
+        <label for="">Стиль рамок</label>
+        <input type="checkbox" data-column-class="coll-11" checked>
+        <label for="">Время отправдения</label>
+        <input type="checkbox" data-column-class="coll-12" checked>
+        <label for="">Статус</label>
+        <input type="checkbox" data-column-class="coll-13" checked>
+        <label for="">Управление</label>
+      </div>
       <table>
-        <th>Имя групы</th>
-        <th>URL группы</th>
-        <th>Сообщение</th>
-        <th>Стиль</th>
-        <th>Дата подписки</th>
-        <th>Сумма</th>
-        <th>Отправления</th>
-        <th>Управление</th>
-        {% for ob in obj %}
-        <tr>
-          <td>{{ ob.groupName }}</td>
-          <td><a href="{{ ob.groupUrl }}">{{ ob.groupUrl }}</a></td>
-          <td style="white-space: pre-line">{{ ob.message }}</td>
-          <td>{{ ob.style }}</td>
-          <td>{{ ob.payDay }}</td>
-          <td>{{ ob.money }}</td>
-          <td>{{ ob.send }}</td>
-          <td>
-            <button onclick="sendId('{{ ob.groupName }}')">Отправить пост</button>
-            <button onclick="removeGroup('{{ ob.groupName }}')">Удалить</button>
-            <button onclick="openWin('{{ ob.groupName }}', {{ ob.money }}, {{ ob.payDay }})">Редактировать</button>
-          </td>
-        </tr>
+        <thead>
+          <td class="coll-1">Группа</td>
+          <td class="coll-2">Ссылка на чат</td>
+          <td class="coll-3">Дата добавления</td>
+          <td class="coll-4">Дата оплаты</td>
+          <td class="coll-5">Сумма</td>
+          <td class="coll-6">Тип отправления</td>
+          <td class="coll-7">Период отправления</td>
+          <td class="coll-8 hidden">Текст поздравления</td>
+          <td class="coll-9">Стиль фона</td>
+          <td class="coll-10">Стиль рамок</td>
+          <td class="coll-11">Время отправления</td>
+          <td class="coll-12">Статус</td>
+          <td class="coll-13">Управление</td>
+        </thead>
+        <tbody>
+          {% for ob in obj %}
+          <tr>
+            <td class="coll-1"><a href="{{ ob.group_url }}">{{ ob.group_url }}</a></td>
+            <td class="coll-2"><a href="{{ ob.chat_url }}">{{ ob.chat_url }}</a></td>
+            <td class="coll-3">{{ ob.date_add }}</td>
+            <td class="coll-4">{{ ob.date_oplata }}</td>
+            <td class="coll-5">{{ ob.money }}</td>
+
+            {% if ob.type_send == 0 %}
+            <td class="coll-6">Авто</td>
+            {% endif %}
+            {% if ob.type_send == 1 %}
+            <td class="coll-6">Ручной</td>
+            {% endif %}
+            {% if ob.type_send == 2 %}
+            <td class="coll-6">Предложка</td>
+            {% endif %}
+
+            {% if ob.period == 0 %}
+            <td class="coll-7">Ежедневно</td>
+            {% endif %}
+            {% if ob.period == 1 %}
+            <td class="coll-7">Ручной</td>
+            {% endif %}
+
+            <td class="coll-8 hidden" style="white-space: pre-line">{{ ob.message }}</td>
+            <td class="coll-9">{{ ob.styleBg }}</td>
+            <td class="coll-10">{{ ob.styleFr }}</td>
+            <td class="coll-11">{{ ob.time_send }}</td>
+            <td class="coll-12">{{ ob.status }}</td>
+            <td class="coll-13">
+              <button class="greenBtn" onclick="sendId('{{ ob.group_url }}')">Отправить пост</button>
+              <button class="redBtn" onclick="removeGroup('{{ ob.group_url }}')">Удалить</button>
+              <button class="greenBtn" onclick="getInfGroup('{{ ob.group_url }}')">Редактировать</button>
+            </td>
+          </tr>
         {% endfor %}
+      </tbody>
       </table>
     </div>
 
-    <button id="But" onclick="send()">Запуск скрипта</button>
-    <button class="popup-open2">Добавить группу</button>
-    <button id="But2" onclick="reserSt()">Сбросить статус</button>
+
+
 
     <!-- окно добавления группы в БД -->
     <div class="popup-fade2">
       <div class="popup2">
         <a class="popup-close2" href="#">Закрыть</a>
         <form method="post" id="ajax_form">
-          <input type="text" name="groupName" value="">
-          <label for="">Имя группы</label>
-          <br>
-          <input type="text" name="groupUrl" value="">
-          <label for="">Ссылка на группу</label>
-          <br>
-          <input type="number" name="style" value="" min="0" max="2">
-          <label for="">Стиль (0-2)</label>
-          <br>
+          <div class="textInp">
+            <div class="">
+              <input type="text" name="group_url" value="" placeholder="Ссылка на группу">
+              <input type="text" name="chat_url" value="" placeholder="Ссылка на чат">
+              <input type="number" name="money" value="" placeholder="Тариф" style="margin-top:10px;">
+              <label for="">< Тариф</label>
+            </div>
+            <div class="stInfo">Стиль: 0-Рандом, 1-стиль, 2-стиль, 3-стиль</div>
+            <div class="">
+              <input type="number" name="styleBg" value="" placeholder="Стиль фона">
+              <input type="number" name="styleFr" value="" placeholder="Стиль рамок">
+            </div>
+          </div>
+          <div class="" style="display:flex;">
+            <div class="slcInfo">Оплачена до</div>
+            <div class="slcInfo">Время отправления</div>
+          </div>
+          <input type="date" name="date_oplata" value="" placeholder="date_oplata">
+          <input type="time" name="time_send" value="01:00" placeholder="Время отправления">
+          <div class="" style="display:flex;">
+            <div class="slcInfo">Период поздравления</div>
+            <div class="slcInfo">Тип отправления</div>
+          </div>
+          <select name="period" required="true">
+            <option value="0">Ежедневно</option>
+            <option value="1">Ручной</<option>
+          </select>
+          <select name="type_send" required="true">
+            <option value="0">Авто</option>
+            <option value="1">Ручной</<option>
+            <option value="2" >Предложка</option>
+          </select>
+
           <textarea name="message" rows="8" cols="80">
 🥰Друзья, нажмите кнопку ❤
 👪Вам не трудно - а именинникам приятно)))
-🎉Сегодня День рождения отмечают:
-{ids}</textarea>
-          <label for="">Сообщение</label>
-          <br>
-          <br>
-          <input type="date" name="payDay" value="">
-          <label for="">Дата подписки</label>
-          <br>
-          <input type="number" name="money" value="">
-          <label for="">Сумма</label>
-          <br>
-          <input type="button" id="btn" value="Добавить" />
+🎉Сегодня День рождения отмечают:</textarea>
+          <input type="submit" id="btn" value="Добавить" style="width:100%">
         </form>
       </div>
     </div>
@@ -79,16 +177,42 @@
       <div class="popup">
         <a class="popup-close" href="#">Закрыть</a>
         <form method="post" id="ajax_form2">
-          <input readonly type="text" name="gName" id="gName">
-          <label for="">Имя группы</label>
-          <br>
-          <input type="date" name="payDay" id="payDay">
-          <label for="">Дата подписки</label>
-          <br>
-          <input type="number" name="money" id="money">
-          <label for="">Сумма</label>
-          <br>
-          <input type="button" id="btn2" value="Изменить" />
+          <form method="post" id="ajax_form">
+            <div class="textInp">
+              <div class="">
+                <input type="text" name="group_url" id="group_url" value="" placeholder="Ссылка на группу" readonly>
+                <input type="text" name="chat_url" id="chat_url" value="" placeholder="Ссылка на чат">
+                <input type="number" name="money" id="money" value="" placeholder="Тариф" style="margin-top:10px;">
+                <label for="money">< Тариф</label>
+              </div>
+              <div class="stInfo">Стиль: 0-Рандом, 1-стиль, 2-стиль, 3-стиль</div>
+              <div class="">
+                <input type="number" name="styleBg" id="styleBg" value="" placeholder="Стиль фона">
+                <input type="number" name="styleFr" id="styleFr" value="" placeholder="Стиль рамок">
+              </div>
+            </div>
+            <div class="" style="display:flex;">
+              <div class="slcInfo">Оплачена до</div>
+              <div class="slcInfo">Время отправления</div>
+            </div>
+            <input type="date" name="date_oplata" id="date_oplata" value="" placeholder="date_oplata">
+            <input type="time" name="time_send" id="time_send" value="01:00" placeholder="Время отправления">
+            <div class="" style="display:flex;">
+              <div class="slcInfo">Период поздравления</div>
+              <div class="slcInfo">Тип отправления</div>
+            </div>
+            <select name="period" id="period" required="true">
+              <option value="0">Ежедневно</option>
+              <option value="1">Ручной</<option>
+            </select>
+            <select name="type_send" id="type_send" required="true">
+              <option value="0">Авто</option>
+              <option value="1">Ручной</<option>
+              <option value="2" >Предложка</option>
+            </select>
+            <textarea name="message" id="message" rows="8" cols="80"></textarea>
+            <input type="submit" id="btn2" value="Изменить" style="width:100%">
+          </form>
         </form>
       </div>
     </div>

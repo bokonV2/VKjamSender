@@ -5,6 +5,7 @@ from jamSender.index import jamSender
 
 app = Flask(__name__)
 app.register_blueprint(jamSender, url_prefix="/jamSender")
+app.secret_key = "d23by4wy53qu64uqa"
 
 
 if __name__ == '__main__':

@@ -1,35 +1,196 @@
-*,
-* before,
-* after{
+*, * before, * after {
   padding: 0;
   margin: 0;
 }
 
-.tableGr{
-  width: 99%;
-  padding: 10px;
+
+
+.searchForm{
+  padding: 15px;
+  width: calc(100% - 30px);
 }
 
-table{
-  margin: 5px;
-  width: 99%;
-  border-collapse: collapse;
-  border: 2px solid black;
+.searchForm input{
+  width: 85%;
+  height: 34px;
+  border: 2px solid silver;
+  border-radius: 5px;
+}
+
+.searchForm button {
+  cursor: pointer;
+  width: 14%;
+  height: 38px;
+  margin: 0px;
+  padding-bottom: 4px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.compControl{
+  display: flex;
+  background-color: white;
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin: 0px 10px;
+}
+
+.skrControl {
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.BDControl{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.compControl a{
+  font-weight: bold;
+  cursor: pointer;
+  color: Black;
   text-align: center;
+  text-decoration: none;
+  width: 150px;
+  padding: 5px;
+  background-color: LimeGreen;
+  border-radius: 5px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  padding-right: 0;
+  justify-content: space-evenly;
+  border: 1px solid black;
+  border-bottom: 0;
+  margin: 0px 10px;
+}
+
+.controls input {
+  /* width: 1em; */
+  height: 20px;
+  /* margin-left: 20px; */
+}
+.controls label {
+  /* width: 20px; */
+  /* height: 20px; */
+  margin-right: 15px;
+}
+
+.tableGr {
+  width: calc(100% - 20px);
+  margin: 10px;
+  margin-top: 0px;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.textInp {
+  display: flex;
+  flex-direction: column;
+}
+
+.stInfo {
+  text-align: center;
+  padding-top: 15px;
+}
+
+.slcInfo {
+  width: 50%;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+.greenBtn {
+  cursor: pointer;
+  background-color: LimeGreen;
+}
+
+.redBtn {
+  cursor: pointer;
+  background-color: Crimson;
+}
+
+.coll-3, .coll-4 {
+  min-width: 85px;
+}
+
+.coll-8 {
+  min-width: 180px;
+}
+
+body {
+  background-color: lightgray;
+}
+
+button {
+  width: 120px;
+  height: 25px;
+  border: 0px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin: 2px;
+}
+
+thead {
+  font-weight: bold;
+  background-color: AntiqueWhite;
+}
+
+table {
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
+  border-collapse: collapse;
+  border: 1px solid black;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 tr, th, td {
   border-collapse: collapse;
-  border: 2px solid black;
+  border: 1px solid black;
 }
+
+tr:hover {
+  background-color: lightgray !important;
+}
+
+tr:nth-child(even) {
+  background: WhiteSmoke;
+}
+
+table td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 textarea {
   width: 100%;
+  margin-top: 10px;
 }
-input {
-  width: 50%;
-  margin-bottom: 10px;
+
+form input, select {
+  width: 49.1%;
+  height: 30px;
 }
 
 #btn {
   width: 100%;
+}
+
+#spin{
+  display: none;
 }

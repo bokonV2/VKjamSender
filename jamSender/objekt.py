@@ -1,43 +1,68 @@
 from peewee import *
-from datetime import date
-from pprint import pprint
+import datetime
 
-db = SqliteDatabase('jamSender/static/groups.db')
-
+user = 'root'
+password = 'root'
+db_name = 'vk'
+#
+db = MySQLDatabase(
+    db_name, user=user,
+    password=password,
+    host='localhost',
+    port=3306,
+    charset='utf8mb4'
+)
 
 class BaseModel(Model):
     class Meta:
         database = db
 
+class tmp(Model):
+    id = IntegerField(null=False)
+    text = CharField(max_length=100)
 
-class Groups(BaseModel):
-    groupName = CharField(unique=True)
-    groupUrl = CharField(unique=True)
-    style = IntegerField()
-    payDay = DateField()
+class groups(BaseModel):
+    id = IntegerField(null=False, primary_key=True)
+    group_url = TextField()
+    date_add = DateField()
+    date_oplata = DateField()
+    chat_url = TextField()
     money = IntegerField()
-    send = CharField()
-    message = CharField()
+    type_send = IntegerField()
+    period = IntegerField()
+    message = TextField()
+    styleBg = IntegerField()
+    styleFr = IntegerField()
+    time_send = TimeField()
+    status = TextField()
 
+    class Meta:
+        db_table = 'groups'
+
+
+
+class vk(BaseModel):
+    id = IntegerField(primary_key=True)
+    group = TextField()
+    date_add = DateField()
+    date_oplata = DateField()
+    link_dialog = TextField()
+    tarif = TextField()
+    tipe = TextField()
+    period = TextField()
+    text = TextField()
+    dizajn = TextField()
+    ramki = TextField()
+    time = CharField()
 
 
 if __name__ == '__main__':
-    # pass
-    db.connect()
-    db.create_tables([Groups,])
+    pass
+    # db.connect()
+    # db.create_tables([groups, vk])
+    # groups.create_table()
 
-    # aa = Groups.get(Groups.groupName == Groups.select()[0].groupName)
-    # aa.money = 500
-    # aa.save()
-
-    # for person in Groups.select():
-    #      print(person.groupName)
-
-    # grandma = Groups.create(
-    #     groupName = "GroupsName2",
-    #     style = 2,
-    #     groupUrl = "url3",
-    #     payDay = date(2021, 12, 18),
-    #     money = 300,
-    #     send = False
-    # )
+    # groups.save()
+    # print(groups.select().where(groups.id == 1))
+    # for group in groups.select():
+    #     print(group)

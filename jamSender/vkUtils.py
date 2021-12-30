@@ -49,7 +49,7 @@ def sendPost(ids, message, group_id):
     url = VKURL.format(
         DOMAIN=DOMAIN,
         METHOD_NAME="wall.post",
-        PARAMETERS=f"owner_id={group_id}&message={message.format(ids=ids)}&attachments=photo{owner_id}_{id}",
+        PARAMETERS=f"owner_id={group_id}&message={message}\n{ids}&attachments=photo{owner_id}_{id}",
         ACCESS_TOKEN=ACCESS_TOKEN,
         V=V)
     response = requests.get(url)
