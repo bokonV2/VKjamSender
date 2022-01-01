@@ -11,8 +11,8 @@ Groups = groups
 @jamSender.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        password = int(request.form.get("password"))
-        if password == 123:
+        password = request.form.get("password")
+        if password == "admin000":
             session["logged"] = True
             return redirect('/jamSender/main')
     else:
@@ -20,9 +20,13 @@ def login():
             return redirect('/jamSender/main')
     return render_template('jamSender/login.html')
 
+@jamSender.route('/logout')
+def unlogin():
+    session["logged"] = None
+    return redirect('/jamSender/main')
+
 @jamSender.route('/main')
 def index():
-    print(session.get("logged"))
     if session.get("logged") == None:
         return redirect("/jamSender/login")
     return render_template('/jamSender/index.html', obj=Groups.select())
@@ -36,6 +40,8 @@ def sort(id):
         obj = Groups.select().where(groups.date_oplata >= datetime.date.today())
     elif id == 1:
         obj = Groups.select().where(groups.date_oplata <= datetime.date.today())
+    elif id == 2:
+        obj = Groups.select().where(groups.type_send == 1 or groups.period == 1)
     return render_template('/jamSender/index.html', obj=obj)
 
 @jamSender.route('/search', methods=['POST'])
@@ -106,10 +112,8 @@ def removeGroup():
     u_removeGroup(Groups, request.form.get("gName"))
     return "1"
 
-
 @jamSender.route('/getInfGroup', methods=['POST'])
 def getInfGroup():
     print(f"JamSender getInfGroup {request.form}")
     response = u_getInfGroup(Groups, request.form.get("group_url"))
     return make_response(jsonify(response), 200)
-    # return jsonify(**data)

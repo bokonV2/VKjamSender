@@ -1,6 +1,5 @@
 import requests, json, random
 from datetime import date
-from pprint import pprint
 from bs4 import BeautifulSoup
 
 from jamSender.vkUtils import *
@@ -45,19 +44,16 @@ def getImage(group):
         with open("jamSender/static/img.jpg", "wb") as f:
             f.write(p.content)
     except Exception as e:
-        print(e)
+        print(f"JamSender getImage {e}")
         return False
-
     return ids
 
 
 def getSendPost(group):
     try:
         if date.today() <= group.date_oplata:
-            print(group.period)
             if group.period == 0:
                 if group.type_send != 1:
-
                     # ids = getImage(group)
                     # ids = "*id236657896 (Захар Бохан), *id236657896 (Захар Бохан), *id236657896 (Захар Бохан), *id236657896 (Захар Бохан)"
                     # sendPost(ids, group.message, getId(group.group_url))
@@ -69,7 +65,7 @@ def getSendPost(group):
             group.status = "Истёк период оплаты"
     except Exception as e:
         group.status = "Ошибка отправки"
-        print(e)
+        print(f"JamSender getSendPost {group.group_url} {e}")
     finally:
         group.save()
 
@@ -117,7 +113,7 @@ def u_addGroup(
             status = "Добавлена",
         )
     except Exception as e:
-        print(e)
+        print(f"JamSender u_create {e}")
         return "0"
 
 def u_addPayDay(
@@ -147,7 +143,7 @@ def u_addPayDay(
         edit.status = "Изменён"
         edit.save()
     except Exception as e:
-        print(e)
+        print(f"JamSender u_addPayDay {e}")
         return "0"
 
 def u_removeGroup(Groups, group_url):
@@ -155,7 +151,7 @@ def u_removeGroup(Groups, group_url):
         to_del = Groups.get(Groups.group_url == group_url)
         to_del.delete_instance()
     except Exception as e:
-        print(e)
+        print(f"JamSender u_removeGroup {e}")
         return "0"
 
 def u_getInfGroup(Groups, group_url):
@@ -173,5 +169,4 @@ def u_getInfGroup(Groups, group_url):
         "styleFr": edit.styleFr,
         "time_send": str(edit.time_send)
     }
-    # print(data)
     return data

@@ -2,7 +2,7 @@
 <html lang="ru" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Админ панель</title>
     <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/master.css') }}">
     <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/popup.css') }}">
     <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/spin.css') }}">
@@ -34,6 +34,7 @@
         <a onclick="spins()" href="/jamSender">Все</a>
         <a onclick="spins()" href="/jamSender/sort/0">Оплаченные</a>
         <a onclick="spins()" href="/jamSender/sort/1">Не оплаченные</a>
+        <a onclick="spins()" href="/jamSender/sort/2">Ручное отправление</a>
       </div>
     </div>
     <div class="tableGr">

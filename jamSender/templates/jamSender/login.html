@@ -2,12 +2,16 @@
 <html lang="ru" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Админ панель логин</title>
+    <link rel="stylesheet" href="{{ url_for('jamSender.static',filename='css/login.css') }}">
   </head>
   <body>
-    <form class="" action="/jamSender/login" method="post">
-      <input type="text" name="password" value="">
-      <input type="submit" name="" value="Submit">
-    </form>
+    <div class="main">
+      <form class="" action="/jamSender/login" method="post">
+        <input type="text" name="password" value="">
+        <br>
+        <input type="submit" value=" Логин ">
+      </form>
+    </div>
   </body>
 </html>
